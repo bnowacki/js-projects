@@ -1,0 +1,55 @@
+/* 
+    BOARD DIVIDER
+ */
+
+.board-divider {
+  background-color: #eee;
+  position: absolute;
+  border-radius: var(--chakra-radii-full);
+}
+
+/* vertical */
+.board-divider.vertical {
+  height: 100%;
+  width: 8px;
+  left: calc(100% / 3);
+  top: 0;
+  transform: translateX(-50%);
+  animation: vertical-divider 1s ease;
+}
+
+.board-divider.vertical:nth-child(even) {
+  left: calc(100% / 3 * 2);
+}
+
+@keyframes vertical-divider {
+  from {
+    transform: translateX(-50%) scaleY(0);
+  }
+  to {
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+
+/* horizontal */
+.board-divider.horizontal {
+  width: 100%;
+  height: 8px;
+  top: calc(100% / 3);
+  left: 0;
+  transform: translateY(-50%);
+  animation: horizontal-divider 1s ease;
+}
+
+.board-divider.horizontal:nth-child(even) {
+  top: calc(100% / 3 * 2);
+}
+
+@keyframes horizontal-divider {
+  from {
+    transform: translateY(-50%) scaleX(0);
+  }
+  to {
+    transform: translateY(-50%) scaleX(1);
+  }
+}
