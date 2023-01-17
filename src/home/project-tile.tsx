@@ -23,7 +23,7 @@ const ProjectTile = ({project}: Props) => {
   return (
     <Flex
       as={Link}
-      to={project.path}
+      to={'/project/' + project.path}
       direction="column"
       bg={useColorModeValue('gray.300', 'gray.900')}
       borderRadius="lg"

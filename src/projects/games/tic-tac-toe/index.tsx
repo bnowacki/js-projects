@@ -2,9 +2,6 @@ import * as React from 'react'
 
 import {Flex} from '@chakra-ui/react'
 
-import ProjectLayout from '@/projects/layout'
-
-import {ticTacToe} from './constants'
 import {Context, GameState, Mark} from './types'
 import {initialState, makeMove, reducer} from './reducer'
 import Board from './components/board'
@@ -47,16 +44,14 @@ const TicTacToe = () => {
 
   const context = React.useMemo(() => ({state, dispatch}), [state, dispatch])
   return (
-    <ProjectLayout project={ticTacToe}>
-      <GameContext.Provider value={context}>
-        <Flex w="100%" gap={4} direction="column" p={4} align="center">
-          <PickPlayersModal />
-          <Scores />
-          <Board />
-          <PauseModal />
-        </Flex>
-      </GameContext.Provider>
-    </ProjectLayout>
+    <GameContext.Provider value={context}>
+      <Flex w="100%" gap={4} direction="column" p={4} align="center">
+        <PickPlayersModal />
+        <Scores />
+        <Board />
+        <PauseModal />
+      </Flex>
+    </GameContext.Provider>
   )
 }
 

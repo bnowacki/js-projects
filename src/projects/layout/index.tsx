@@ -1,28 +1,37 @@
 import * as React from 'react'
 
-import {Flex, Heading, Stack, Text} from '@chakra-ui/react'
+import {Center, Flex, Heading, Stack, Text} from '@chakra-ui/react'
+import {Outlet, useLocation} from 'react-router-dom'
 
-import {Project} from '@/types'
+import projects from '../data'
 
-type Props = {
-  project: Project
-  children: React.ReactNode
-}
+const ProjectLayout = () => {
+  const {pathname} = useLocation()
 
-const ProjectLayout = ({project, children}: Props) => {
+  const project = React.useMemo(() => {
+    const parts = pathname.split('/')
+    const path = parts[parts.length - 1]
+
+    return projects.find((p) => p.path === path)
+  }, [pathname])
+
+  if (!project) {
+    return <Center>Project Not Found.</Center>
+  }
+
   return (
     <Stack py={4} flex="1" justify="flex-start" align="center">
       <Flex
-        flex="3"
+        flex="6"
         w="100%"
         justify="center"
-        align="center"
+        align="stretch"
         bg="#111"
         borderRadius="lg"
         overflow="hidden"
         position="relative"
       >
-        {children}
+        <Outlet />
       </Flex>
       <Stack w="100%" flex="1" borderRadius="lg" bg="gray.900" p={2}>
         <Heading size="lg">{project.name}</Heading>

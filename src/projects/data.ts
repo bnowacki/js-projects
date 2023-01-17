@@ -1,11 +1,11 @@
 import {Project} from '@/types'
 
 import {ticTacToe} from './games/tic-tac-toe/constants'
+import {sortingVisualizer} from './visualizations/sorting/constants'
 
 const projects: Project[] = [
-  {
-    ...ticTacToe,
-  },
+  ticTacToe,
+  sortingVisualizer,
   {
     name: 'Chess',
     path: 'chess',
@@ -15,12 +15,6 @@ const projects: Project[] = [
   {
     name: 'Snake',
     path: 'sname',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum dolore eius necessitatibus non repellendus fugit soluta animi eaque natus impedit?',
-  },
-  {
-    name: 'Sorting Visualizer',
-    path: 'sorting-visualizer',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum dolore eius necessitatibus non repellendus fugit soluta animi eaque natus impedit?',
   },
