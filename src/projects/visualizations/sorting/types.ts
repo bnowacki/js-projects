@@ -7,6 +7,7 @@ export enum Sort {
   Heap = 'Heap sort',
   Selection = 'Selection sort',
   Insertion = 'Insertion sort',
+  Shell = 'Shell sort',
 }
 
 export type Status = 'sorting' | 'finished' | 'paused'

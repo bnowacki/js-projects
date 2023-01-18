@@ -1,16 +1,6 @@
 import * as React from 'react'
 
-import {
-  Stack,
-  Text,
-  Image,
-  AspectRatio,
-  Flex,
-  useColorModeValue,
-  Heading,
-  Center,
-  Box,
-} from '@chakra-ui/react'
+import {Stack, Text, Image, Flex, useColorModeValue, Heading, Center, Box} from '@chakra-ui/react'
 import {Link} from 'react-router-dom'
 
 import {Project} from '@/types'
@@ -37,14 +27,16 @@ const ProjectTile = ({project}: Props) => {
       <Stack p={2} bg="#161b22" borderBottom="1px solid" borderColor="whiteAlpha.300">
         <Heading size="md">{project.name}</Heading>
       </Stack>
-      <Box position="relative" bg="#111">
+      <Box position="relative" bg="#111" overflow="hidden">
         <Image
-          src={project.imgPath || 'https://via.placeholder.com/960x540'}
+          src={project.thumbnail || 'https://via.placeholder.com/960x540'}
           objectFit="contain"
           style={{aspectRatio: 16 / 9}}
+          _groupHover={{transform: 'scale(1.1)'}}
+          transition="all 1s ease"
         />
         <Center
-          bg="#161b22"
+          bg="blackAlpha.900"
           opacity={0}
           position="absolute"
           w="100%"
@@ -52,11 +44,16 @@ const ProjectTile = ({project}: Props) => {
           top={0}
           left={0}
           p={4}
-          transition="all 250ms ease"
-          transform="scale(1.1)"
-          _groupHover={{transform: 'scaleY(1)', opacity: 0.9}}
+          transition="all 500ms ease"
+          _groupHover={{opacity: 0.8}}
         >
-          <Text size="md" opacity={1}>
+          <Text
+            size="md"
+            opacity={1}
+            transition="all 500ms ease"
+            transform="translateY(100px)"
+            _groupHover={{transform: 'translateY(0)'}}
+          >
             {project.description}
           </Text>
         </Center>

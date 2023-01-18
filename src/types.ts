@@ -2,5 +2,5 @@ export type Project = {
   name: string
   path: string
   description?: string
-  imgPath?: string
+  thumbnail?: string
 }

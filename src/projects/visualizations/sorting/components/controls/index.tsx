@@ -26,6 +26,7 @@ const Controls = () => {
     onSortChange,
     isRainbow,
     toggleRainbow,
+    nextSortingStep,
   } = React.useContext(SortingContext)
   const isSorting = React.useMemo(() => status === 'sorting', [status])
 
@@ -58,7 +59,38 @@ const Controls = () => {
       justify="center"
       align="center"
     >
-      <Flex align="flex-end" flex="1">
+      <Flex align="center" gap={1}>
+        {/* Play button */}
+        <IconButton
+          aria-label="play-pause"
+          p={2}
+          size="lg"
+          onClick={handleStatusChange}
+          borderRadius="full"
+          icon={isSorting ? <PauseIcon size="75%" /> : <PlayIcon size="75%" />}
+        />
+        <IconButton
+          aria-label="next-step"
+          p={2}
+          size="md"
+          onClick={nextSortingStep}
+          borderRadius="full"
+          icon={<NextIcon size="75%" />}
+          isDisabled={isSorting}
+        />
+      </Flex>
+      {/* Shuffle */}
+      <Tooltip label="Shuffle">
+        <IconButton
+          aria-label="shuffle-array"
+          borderRadius="full"
+          p={2}
+          icon={<ShuffleIcon size="100%" />}
+          onClick={shuffleArray}
+          isDisabled={isSorting}
+        />
+      </Tooltip>
+      <Flex align="flex-end" minW="250px">
         {/* Sort select */}
         <Select value={pickedSort} onChange={handleSortChange} isDisabled={isSorting}>
           {Object.entries(Sort).map(([key, value]) => (
@@ -68,51 +100,7 @@ const Controls = () => {
           ))}
         </Select>
       </Flex>
-      {/* Color toggle */}
-      <IconButton
-        aria-label="change-color-theme"
-        icon={<ColorIcon size="75%" />}
-        onClick={toggleRainbow}
-        colorScheme={isRainbow ? 'pink' : undefined}
-      />
-      <Flex align="center" gap={1}>
-        {/* Play button */}
-        <IconButton
-          aria-label="shuffle-array"
-          p={2}
-          size="md"
-          onClick={handleStatusChange}
-          borderRadius="full"
-          icon={<PrevIcon size="75%" />}
-        />
-        <IconButton
-          aria-label="shuffle-array"
-          p={2}
-          size="lg"
-          onClick={handleStatusChange}
-          borderRadius="full"
-          icon={isSorting ? <PauseIcon size="75%" /> : <PlayIcon size="75%" />}
-        />
-        <IconButton
-          aria-label="shuffle-array"
-          p={2}
-          size="md"
-          onClick={handleStatusChange}
-          borderRadius="full"
-          icon={<NextIcon size="75%" />}
-        />
-      </Flex>
-
-      {/* Shuffle */}
-      <Tooltip label="Shuffle">
-        <IconButton
-          aria-label="shuffle-array"
-          icon={<ShuffleIcon size="75%" />}
-          onClick={shuffleArray}
-          isDisabled={isSorting}
-        />
-      </Tooltip>
-      <Flex gap={4} flex="1">
+      <Flex gap={4} flex="1" align="center">
         {/* Speed */}
         <Slider label={`Speed ${speed} / s`} value={speed} onChange={setSpeed} min={1} max={120} />
         {/* Array size */}
@@ -123,6 +111,15 @@ const Controls = () => {
           min={10}
           max={250}
           isDisabled={isSorting}
+        />
+        {/* Color toggle */}
+        <IconButton
+          aria-label="change-color-theme"
+          borderRadius="full"
+          p={2}
+          icon={<ColorIcon size="100%" />}
+          onClick={toggleRainbow}
+          colorScheme={isRainbow ? 'pink' : undefined}
         />
       </Flex>
     </Flex>

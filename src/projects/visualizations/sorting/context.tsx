@@ -5,14 +5,18 @@ import {useDisclosure} from '@chakra-ui/react'
 import useInterval from '@/common/hooks/use-interval'
 
 import {shuffleArray} from './utils'
-import {SortingFunction, Sort, SortingStepGenerator, BarStyle, Status} from './types'
+import {Sort, SortingStepGenerator, BarStyle, Status} from './types'
 import sortToAlgorithmMap from './algorithms'
+// @ts-ignore
+import noteSound from './note.mp3'
 
 type State = {
   array: number[]
   highlighted: BarStyle[]
   changeArraySize?: (size: number) => void
   shuffleArray?: () => void
+
+  nextSortingStep?: () => void
 
   pickedSort: Sort
   onSortChange?: (sort: Sort) => void
@@ -58,7 +62,6 @@ const Context = ({children}: {children: React.ReactNode}) => {
   const [speed, setSpeed] = React.useState(initialState.speed)
   const delay = React.useMemo(() => (status === 'sorting' ? 1000 / speed : null), [status, speed])
 
-  // const [algorithm, setAlgorithm] = React.useState<SortingFunction>(BubbleSort)
   const [sortingSteps, setSortingSteps] = React.useState<SortingStepGenerator | null>(
     sortToAlgorithmMap[initialState.pickedSort](array)
   )
@@ -77,7 +80,7 @@ const Context = ({children}: {children: React.ReactNode}) => {
       setSortingSteps(sortToAlgorithmMap[pickedSort](array))
     }
     prevState.current = status
-  }, [status]) // eslint-disable-line
+  }, [array, status]) // eslint-disable-line
 
   const changeArraySize = React.useCallback(
     (length: number) => {
@@ -92,7 +95,11 @@ const Context = ({children}: {children: React.ReactNode}) => {
     setArray((prev) => shuffleArray([...prev]))
   }, [onStatusChange])
 
-  useInterval(() => {
+  React.useEffect(() => {
+    handleShuffleArray()
+  }, [handleShuffleArray])
+
+  const nextSortingStep = React.useCallback(() => {
     if (!sortingSteps) return
 
     const next = sortingSteps.next()
@@ -100,6 +107,10 @@ const Context = ({children}: {children: React.ReactNode}) => {
     if (next.done) return onStatusChange('finished')
 
     setHighlighted(next.value)
+  }, [sortingSteps, onStatusChange])
+
+  useInterval(() => {
+    nextSortingStep()
   }, delay)
 
   return (
@@ -111,6 +122,7 @@ const Context = ({children}: {children: React.ReactNode}) => {
         highlighted,
         pickedSort,
         onSortChange,
+        nextSortingStep,
         speed,
         setSpeed,
         status,

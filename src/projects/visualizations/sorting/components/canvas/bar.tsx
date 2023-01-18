@@ -19,7 +19,7 @@ const Bar = ({value, ...rest}: BoxProps & Props) => {
       bgColor: isRainbow
         ? `hsl(${(value / Math.max(...array)) * 360}, 40%, 50%)`
         : `hsl(190, ${(value / Math.max(...array)) * 50 + 10}%, ${(value / Math.max(...array)) * 50 + 10}%)`,
-      transition: 'all 100ms ease',
+      transition: 'height 100ms ease',
     }),
     [value, isRainbow, array]
   )
